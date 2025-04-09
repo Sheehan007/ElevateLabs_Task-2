@@ -1,0 +1,38 @@
+#1. Making transformations by Editing the M Code in the Advanced Editor
+
+a. Filtering rows to remove data for a specific region
+#"Filtered Rows" = Table.SelectRows(
+    #"Changed Type",
+    each [Region] <> null and [Region] <> ""
+)
+
+b. Adding a custom column
+#"Added Custom" = Table.AddColumn(
+    #"Filtered Rows",
+    "Discount_Amount",
+    each [Sales] * [Discount],
+    type number
+)
+
+c. Splitting a column
+#"Split Column by Delimiter" = Table.SplitColumn(
+    #"Filtered Rows",
+    "Full Name",
+    Splitter.SplitTextByDelimiter(" ", QuoteStyle.Csv),
+    {"First Name", "Last Name"}
+)
+
+
+
+#2. Data Modeling and DAX (Data Analysis Expressions)
+Total Sales = SUM('Sample - Superstore'[Sales])
+Total Profit = SUM('Sample - Superstore'[Profit])
+Profit Margin = DIVIDE([Total Profit], [Total Sales])
+
+-------------------------------------------------------------------------------------------
+ONCE OUR DATA IS LOADED AND DAX MEASURES ARE CREATED, WE CAN GET INTO CREATING VISUALS. 
+-------------------------------------------------------------------------------------------
+
+#3. Creating Visualizations
+a. Total Sales vs Region
+b. 
